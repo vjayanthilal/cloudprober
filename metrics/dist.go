@@ -91,7 +91,17 @@ func NewDistributionFromProto(distProto *distpb.Dist) (*Distribution, error) {
 
 	case *distpb.Dist_ExponentialBuckets:
 		expb := distProto.GetExponentialBuckets()
-		return NewExponentialDistribution(float64(expb.GetBase()), float64(expb.GetScaleFactor()), int(expb.GetNumBuckets()))
+		base, scale, num := float64(expb.GetBase()), float64(expb.GetScaleFactor()), int(expb.GetNumBuckets())
+		if base == 0 {
+			base = 2
+		}
+		if scale == 0 {
+			scale = 1
+		}
+		if num == 0 {
+			num = 20
+		}
+		return NewExponentialDistribution(base, scale, num)
 	}
 
 	return nil, fmt.Errorf("unknown buckets type: %v", distProto.Buckets)
