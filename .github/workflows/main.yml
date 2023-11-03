@@ -5,4 +5,4 @@ on:
 
 jobs:
   resue:
-    uses: github.com/vjayanthilal/cloudprober/.github/workflows/reuse.yml@main
+    uses: vjayanthilal/cloudprober/.github/workflows/reuse.yml@main
